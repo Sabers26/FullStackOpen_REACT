@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./components/App.js";
 
+
 const notes = [
     {
         id: 1,
