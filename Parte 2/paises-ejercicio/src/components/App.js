@@ -4,7 +4,7 @@ import Paises from "./Paises";
 const App = () => {
     return (
         <>
-            <h1>Soy el APP</h1>
+            <h1>Inicio del App</h1>
             <Paises/>
         </>
     )
