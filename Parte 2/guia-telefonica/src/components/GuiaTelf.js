@@ -1,8 +1,15 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 const Guia = () =>{
     const [persons, setPersons] = useState([])
     const [newPerson, setNewPerson] = useState({name:"", number:""})
+
+    useEffect(() => {
+        axios.get("http://localhost:3001/persons").then(response=>{
+            setPersons(response.data)
+        })
+    }, [])
     
     const findPerson = persons.find((person)=> person.name===newPerson.name)
 
