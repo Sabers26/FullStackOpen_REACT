@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Clima from "./Clima";
 
 const Paises = () => {
     const [paises, addpaises] = useState([])
@@ -34,6 +35,7 @@ const Paises = () => {
                         {Object.keys(pais.languages).map(lang=>{
                             return <li key={pais.languages[lang]}>{pais.languages[lang]}</li>
                         })}
+                        <Clima capital={pais.capital}/>
                         
                     </>
                     )
