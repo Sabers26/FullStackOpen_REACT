@@ -11,3 +11,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.div-message{
+  background-color: #8cc255 ;
+  border: 1px solid #87fc11;
+  width: 40%;
+  text-align: center;
+}
+
+.p-message{
+  font-size: small;
+  font-style: initial;
+  color: #87fc11;
+}
