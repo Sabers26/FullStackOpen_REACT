@@ -1,9 +1,17 @@
 const express = require("express");
+const morgan = require("morgan")
 
 const app = express()
 
-const body_parser = require("body-parser")
-app.use(body_parser.json())
+const requestLogger = (request, response, next)=>{
+    console.log('Method:', request.method)
+    console.log('Path:  ', request.path)
+    console.log('Body:  ', request.body)
+    console.log('---')
+    next()
+}
+app.use(requestLogger)
+app.use(express.json())
 
 var persons = [
     {
@@ -20,10 +28,12 @@ const generatedID = () => {
 
 app.get("/", (request, response)=>{
     response.send("<h1>Inicio de backend</h1>");
+    morgan(':method :url :status :res[content-length] - :response-time ms')
 })
 
 app.get("/api/persons", (request, response) =>{
     response.json(persons);
+    morgan(':method :url :status :res[content-length] - :response-time ms')
 })
 
 app.get("/api/persons/:id", (request, response)=>{
@@ -36,6 +46,7 @@ app.get("/api/persons/:id", (request, response)=>{
     } else {
         response.status(404).end();
     }
+    morgan(':method :url :status :res[content-length] - :response-time ms')
 })
 
 app.delete("/api/persons/:id", (request, response)=>{
@@ -43,6 +54,7 @@ app.delete("/api/persons/:id", (request, response)=>{
     persons = persons.filter(p => p.id !== id)
     
     response.status(204).end()
+    morgan(':method :url :status :res[content-length] - :response-time ms')
 })
 
 app.post("/api/persons", (request, response)=>{
@@ -68,6 +80,7 @@ app.post("/api/persons", (request, response)=>{
     persons = persons.concat(person)
     console.log(persons)
     response.json(person)
+    morgan(':method :url :status :res[content-length] - :response-time ms')
 })
 
 app.get("/info", (request, response)=>{
@@ -75,7 +88,15 @@ app.get("/info", (request, response)=>{
     const hora = new Date()
 
     response.send(`<h1>La agenda tiene informacion de ${people} personas</h1><br><p>${hora}</p>`);
+    morgan(':method :url :status :res[content-length] - :response-time ms')
 })
+
+const unknownEndpoint = (request, response) => {
+    response.status(404).send({ error: 'unknown endpoint' })
+    morgan(':method :url :status :res[content-length] - :response-time ms')
+}
+
+app.use(unknownEndpoint)
 
 const PORT = 3001
 
